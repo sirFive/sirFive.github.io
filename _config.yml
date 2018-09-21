@@ -1,9 +1,9 @@
 # Basic
 title: 好好先生
 subtitle: 个人站
-description: 欢迎来到我的个人站~
+description: 前世五百次回眸，才能换得今生的一次擦肩而过。
 # 头像里面的标题
-avatarTitle: leopardpan
+avatarTitle: x那位先生x
 # 头像里面的描述
 avatarDesc: JAVA / 机器学习
 url: "https://sirfive.github.io/"
@@ -15,10 +15,10 @@ comment:
 
 # Social
 social:
-    weibo: 5366874726 
-    github: leopardpan
+    weibo:  
+    github: sirfive
     # twitter: 
-    mail: leopardpan@icloud.com
+    mail: 348627749@qq.com
 
 # 百度统计 
 # 使用博客模板请去掉或者更换 id 
