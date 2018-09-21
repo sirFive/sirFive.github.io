@@ -1,75 +1,70 @@
+# Basic
+title: 好好先生
+subtitle: 个人站
+description: 欢迎来到我的个人站~
+# 头像里面的标题
+avatarTitle: leopardpan
+# 头像里面的描述
+avatarDesc: JAVA / 机器学习
+url: "https://sirfive.github.io/"
 
-# Site settings
-title: 好好先生 Blog
-SEOTitle: 好好先生的博客
-header-img: img/home-bg.jpg
-email: wsd_j2@126.com
-description: "好学生 | 好好先生 | 希望能做出一点东西"
-keyword: "好好先生, PYTHON, JAVA, 好好先生 Blog, 博客, 互联网, 机器学习"
-url: "https://sirfive.github.io/"              
-baseurl: ""                            # for example, '/blog' if your blog hosted on 'host/blog'
+# Comment
+comment:
+    disqus: leopard
+    # uyan: 2143225  # 有言id,登录有言官网申请
+
+# Social
+social:
+    weibo: 5366874726 
+    github: leopardpan
+    # twitter: 
+    mail: leopardpan@icloud.com
+
+# 百度统计 
+# 使用博客模板请去掉或者更换 id 
+baidu:
+#    id: 8ba1c6be0953b6f9c2ba38e57f615421  
+
+# Google Analytics
+# 使用博客模板请去掉或者更换 id
+ga:
+    id: UA-84134159-3   
+    host: auto  
 
 
+# 《----------------- 上面的信息修改成你自己的 ---------------------------》
+#
+#
+#  _post/ 下的文章更换成你自己的文章
+#  帮忙star一下，感谢~😆 地址： https://github.com/leopardpan/leopardpan.github.io
+#
+#
+# 《--------------- 下面的信息可以自行选择是否修改 ------------------------》
 
-# SNS settings
-RSS: false
-github_username:    aichitudou
 
-
-# Build settings
-# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
+permalink: /:year/:month/:title/
+# Format
 highlighter: rouge
-permalink: pretty
-paginate: 10
-exclude: ["_site", "less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
-anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 
+textColor: #FF0000
 
+# supported colors: blue, green, purple, red, orange or slate. If you need clear, leave it empty.
+cover_color: clear
 
-# Gems
-# from PR#40, to support local preview for Jekyll 3.0
-plugins: [jekyll-paginate]
+# The blog button should not be removed.
+blog_button:
+    title: 博客主页
 
-
-
-# Markdown settings
-# replace redcarpet to kramdown,
-# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
-# document: http://jekyllrb.com/docs/configuration/#kramdown
-markdown: kramdown
-kramdown:
-  input: GFM                            # use Github Flavored Markdown !important
-
-
-
-# Disqus settings
-disqus_username: aichitudou
-
-# Netease setttings
-netease_comment: false
-
-
-
-# Sidebar settings
-sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "提高自己的工程能力"
-sidebar-avatar: /img/avatar-tudou.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
-
-
-
-# Featured Tags
-featured-tags: true                     # whether or not using Feature-Tags
-featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
-
-
-
-# Progressive Web Apps
-chrome-tab-theme-color: "#000000"
-service-worker: true
-
-
-
-# Friends
-# friends: [
+# Navigation buttons in the front page.s
+nav:
+    - {title: 所有文章, description: archive, url: '/archive'}   
+    - {title: 标签, description: tags, url: '/tags'}      
+    - {title: 关于我, description: about, url: '/about'}      
     
-# ]
+
+# Pagination
+gems: [jekyll-paginate,jekyll-sitemap]
+paginate: 20
+paginate_path: "page/:num/"
+
+
