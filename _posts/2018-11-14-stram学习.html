@@ -1,0 +1,124 @@
+---
+layout: post
+title: "stream"
+date: 2018-11-14
+description: "stream学习"
+tag: 博客 
+---
+<h1 align="center">Jdk1.8新特性--stream</h1>
+<h2>1.描述</h2>
+<b style="margin-left: 2%;"><strong>Classes to support functional-style operations on streams of elements, such as map-reduce  transformations on collections.</strong></b><br/>
+<b style="margin-left: 2%;">翻译成中文就是：这个类用于支持元素流上的功能样式操作，例如集合上的映射还原转换。就是说一般用来操作集合：将要处理的元素集合看作一种流， 流在管道中传输，<br/>
+    并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。对应的包：Package java.util.stream</b>
+<h2>2.用法</h2>
+<h3>1.创建流的方式</h3>
+<p style="margin-left: 2%;">stream() − 为集合创建串行流。</p>
+<p style="margin-left: 2%;">parallelStream() − 为集合创建并行流。</p>
+<strong style="margin-left: 2%;">栗子：</strong>
+<p style="margin-left: 2%;color:blue">List(String) listStrings = Arrays.asList("abc", "", "bc", "efg", "abcd","", "jkl");<br/>
+    List(String) filtered = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.toList());<br/>
+    <b style="color:black">listStrings.stream()：就是为集合listStrings创建流.，并筛选(filter())掉空字符串</b></p>
+<h3>2.主要方法</h3>
+<h4>1.filter</h4>
+<p style="margin-left: 2%;color:red">filter 方法用于通过设置的条件过滤出元素</p>
+<p style="margin-left: 2%;color:blue">List(String) strings = Arrays.asList("abc", "", "bc", "efg", "abcd","", "jkl");<br/>
+    // 获取空字符串的数量
+    List(String) filtered = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.toList());<br/>
+    <b style="color:black">最后list的内容为：("abc", "bc", "efg", "abcd","jkl")</b><br/><br/>
+    //返回isStudent==true的Person集合<br/>
+    List(Person) result = lp.stream().filter(Person::isStudent).collect(toList());</p>
+<h4>2.forEach</h4>
+<p style="margin-left: 2%;color:red">forEach 用于迭代流中的每个数据（遍历）</p>
+<p style="margin-left: 2%;color:blue">Random random = new Random();<br/>
+    random.ints().limit(10).forEach(System.out::println);<br/>
+    <b style="color:black">最后list的内容为：打印出10个随机数</b></p>
+<h4>3.limit</h4>
+<p style="margin-left: 2%;color:red">limit 方法用于获取指定数量的流(获取指定的前n个数值)</p>
+<h4>4.skip</h4>
+<p style="margin-left: 2%;color:red">skip 跳过</p>
+<p style="margin-left: 2%;color:blue">
+    //跳过前3个（不取前3个值，其余都取）<br/>
+    List(Person) result33 = lp.stream().skip(3).collect(toList());<br/>
+<h4>5.sorted</h4>
+<p style="margin-left: 2%;color:red">sorted 方法用于对流进行排序（从小到大）</p>
+<p style="margin-left: 2%;color:blue">
+    Random random = new Random();<br/>
+    random.ints().limit(10).sorted().forEach(System.out::println);<br/>
+    <b style="color:black">最后内容：打印出10个由小到大的随机数</b></p>
+<h4>6.map</h4>
+<p style="margin-left: 2%;color:red">map 方法用于映射每个元素到对应的结果(流会将每一个元素输送给map函数，并执行map中的Lambda表达式，最后将执行结果存入一个新的流中)</p>
+<p style="margin-left: 2%;color:blue">
+    List(Integer) numbers2 = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+    Set(Integer) squaresList2 = numbers2.stream().map(i -> i*i).collect(Collectors.toSet());<br/>
+    <b style="color:black">最后set集合内容：（49,4,9,25）</b></br/></br/>
+    //获取每个人的名字并放到list中<br/>
+    List(String) result2 = lp.stream().map(Person::getName).collect(toList());
+</p>
+<h4>7.map</h4>
+<p style="margin-left: 2%;color:red">Collectors 类实现了很多归约操作，例如将流转换成集合和聚合元素。Collectors 可用于返回列表或字符串</p>
+<p style="margin-left: 2%;color:blue">
+    //转成set<br/>
+    List(Integer) numbers2 = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+    Set(Integer) squaresList2 = numbers2.stream().map(i -> i*i).collect(Collectors.toSet());<br/><br/>
+
+    //合并字符串<br/>
+    String mergedString = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.joining(", "));<br/><br/>
+
+    //转成list(string)
+    List(String) result2 = lp.stream().map(Person::getName).collect(toList());
+</p>
+<h4>8.统计</h4>
+<p style="margin-left: 2%;color:red">获取最大值，最小值，总数等</p>
+<p style="margin-left: 2%;color:blue">
+    IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();<br/>
+    System.out.println("列表中最小的数 : " + stats.getMin());<br/>
+    //上面两句等同于 下面的那个<br/>
+    OptionalInt a = numbers.stream().mapToInt((x) -> x).min();<br/>
+    int a2 = a.getAsInt(); //转成int<br/><br/>
+
+    System.out.println("列表中最大的数 : " + stats.getMax());//-->max()<br/>
+    System.out.println("列表中最小的数 : " + stats.getMin());//-->min()<br/>
+    System.out.println("所有数之和 : " + stats.getSum());//-->sum()<br/>
+    System.out.println("平均数 : " + stats.getAverage());//-->average()<br/>
+    System.out.println("所有数的个数 : " + stats.getCount());//-->count()<br/><br/>
+
+    long a3 = numbers.stream().mapToInt((x) -> x).summaryStatistics().getCount();<br/>
+    int a4 = numbers.stream().mapToInt((x) -> x).sum();<br/>
+    OptionalDouble a5 = numbers.stream().mapToInt((x) -> x).average();<br/>
+    double a6 = a5.getAsDouble();<br/>
+    //有些的返回值是Optional，可通过getAsxx返回对应的基本数据类型。
+</p>
+<h4>9.其它</h4>
+<p style="margin-left: 2%;color:red">
+    //是否匹配任意一个元素anyMatch（）,
+    //是否匹配所有元素：allMatch，
+    //是否未匹配所有元素：noneMatch，
+    //findAny能够从流中随便选一个元素出来</p>
+<p style="margin-left: 2%;color:blue">
+    //是否有人是学生<br/>
+    boolean lp1 = lp.stream().anyMatch(Person::isStudent);<br/><br/>
+
+    //随机挑一个人<br/>
+    Optional<Person> person = lp.stream().findAny();
+</p>
+<h4>10.流的合并</h4>
+<p style="margin-left: 2%;color:red">Collectors 类实现了很多归约操作，例如将流转换成集合和聚合元素。Collectors 可用于返回列表或字符串</p>
+<p style="margin-left: 2%;color:blue">
+    List(String) list = new ArrayList<String>();<br/>
+    list.add("I am a boy");<br/>
+    list.add("I love the girl");<br/>
+    list.add("But the girl loves another girl");<br/><br/>
+
+    List(String) a222 = list.stream().map(line->line.split(" ")).map(Arrays::stream).distinct().collect(toList());<br/>
+    System.out.println("123333333333333333");<br/>
+
+    //首先将list变成流：list.stream();<br/>
+    //按空格分词：list.stream().map(line->line.split(" "));<br/>
+    //分完词之后，每个元素变成了一个String[]数组。将每个String[]变成流：list.stream().map(line->line.split(" ")).map(Arrays::stream)<br/>
+
+    list.stream() //将list变成流：list.stream();<br/>
+    .map(line->line.split(" "));  //按空格分词
+</p>
+<h2>3.总结</h2>
+<b style="margin-left: 2%">作为jdk1.8新出的特性，流的作用就是简化集合的操作，以前需要写循环或者多行代码来处理，现在直接一个流搞定。</b>
+
