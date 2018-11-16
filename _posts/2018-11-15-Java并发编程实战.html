@@ -30,13 +30,13 @@ tag: Java
 <p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;Java提供了一种内置的锁机制来支持原子性：同步代码块（synchronized block）。同步代码块包括
     两部分：一个对位锁的对象引用，一个作为这个锁保护的代码块。其中同步代码块的锁就是方法调用所在的对象。代码如下：<br/>
 <p style="margin-left: 2%;">
-    <hr />
-    <b style="margin-left: 2%;color:blue">
-        synchronized(lock){</br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//访问或修改由锁保护的共享状态<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-    </b>
-    <hr />
+    <hr style="margin-left: 2%;"/>
+        <b style="margin-left: 2%;color:blue">
+            synchronized(lock){</br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//访问或修改由锁保护的共享状态<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+        </b>
+    <hr style="margin-left: 2%;"/>
 </p>
 </p>
 <p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;Java的每个对象都可以用作一个实现同步的锁，这些锁被称为内置锁或监视器锁。线程进入同步代码块之前获得锁，
