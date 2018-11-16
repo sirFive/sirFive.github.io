@@ -1,0 +1,39 @@
+---
+layout: post
+title: "JVM内存的各个区域"
+date: 2018-09-21
+description: "JVM内存的各个区域"
+tag: JVM
+---
+<h1 align="center">内存的各个区域</h1>
+<h3>1.概述</h3>
+<p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;Java虚拟机运行的数据区域分为：<strong>线程隔离</strong>的数据区和<strong>非线程隔离</strong>的数据区。线程隔离的数据区包括：
+    程序计数器、虚拟机栈、本地方法栈。所有线程共享的数据区包括：堆和方法区。
+</p>
+<h3>2.各个区域介绍</h3>
+<h4>1.程序计数器</h4>
+<p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;程序计数器是当前线程执行的字节码的行号指示器。执行Java方法时，它记录的是正在执行的虚拟机字节码指令
+    的地址。执行native方法时，计数器的值为null。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b style="color:blue">异常：</b>唯一一个不会抛出OutofMemoryError的内存数据区域。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;注："native method":Java调用非Java代码的接口。
+</p>
+<h4>2.虚拟机栈</h4>
+<p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;描述Java方法执行的内存模型，Java方法执行时会创建栈帧，用于存储局部变量表、操作数栈、动态链接和
+    方法出口等。其中局部变量表存放编译期的基本数据类型和对象引用类型。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b style="color:blue">异常：</b>StackOverFlowError和OutofMemoryError。StackOverFlowError：线程请求的栈的深度大于虚拟机所允许的深度。
+    OutofMemoryError：虚拟机动态扩展时无法申请到足够的内存。
+</p>
+<h4>3.本地方法栈</h4>
+<p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;作用和虚拟机栈类似，区别是：虚拟机栈执行的是Java方法，本地方法栈执行的是native method。
+</p>
+<h4>4.堆</h4>
+<p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;在虚拟机启动的时候就会创建堆，它主要存放对象实例，是垃圾收集的主要区域。它分为新生代和老年代。
+    或者分为Eden空间、From Survior空间、To Survior空间。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b style="color:blue">异常：</b>OutofMemoryError：堆中没有完成实例分配，又无法再扩展。
+</p>
+<h4>5.方法区</h4>
+<p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;存放已经被虚拟机加载的类信息、常量、静态变量（编译后的代码）。运行时常量池：也是方法区的一部分，
+    用于存放编译器生成的各种字面变量和符号引用。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b style="color:blue">异常：</b>OutofMemoryError：当方法区无法满足内存分配的需求时。
+</p>
+<h3>2.hotSpot虚拟机对象探秘</h3>
