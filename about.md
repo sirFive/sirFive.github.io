@@ -15,15 +15,15 @@ title: 关于我
 
 <p>
 
-<p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;子衿
-<p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[先秦] 诗经
-<p>
+<p align="center">
+子衿
+<p align="center">
+[先秦] 诗经
+<p align="center">
 青青子衿，悠悠我心。纵我不往，子宁不嗣音？
-<p>
+<p align="center">
 青青子佩，悠悠我思。纵我不往，子宁不来？
-<p>
+<p align="center">
 挑兮达兮，在城阙兮。一日不见，如三月兮。
 
 
