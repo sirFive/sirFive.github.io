@@ -1,0 +1,47 @@
+---
+layout: post
+title: "垃圾收集器和内存分配策略"
+date: 2018-11-17
+description: "JVM02--垃圾收集器和内存分配策略"
+tag: JVM
+---
+<h3>1.对象已死吗？</h3>
+<h4>1.判断方法</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;判断一个对象是否死亡的方法：引用计数算法和可达性分析算法。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;引用计数算法：给对象添加一个引用计数器，有一个地方引用它就给它+1，引用失效就-1,当值为0表示引用已失效。<b style="color:blue">缺点：</b>
+	无法解决对象之间相互引用的问题。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;可达性分析算法：通过一系列的称为“GC Roots”的对象作为起点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到GC Roots没有
+	任何引用链相连时，则证明此对象是不可用的。
+</p>
+<h4>2.关于引用</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;JDK1.2后引用分为强引用、软引用、弱引用、虚引用。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;强引用：例如：A a = new A();，只要强引用存在，垃圾收集器就永远不会回收掉被引用的对象。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;软引用：用于描述有用但非必须的对象，它会在内存溢出前被回收。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;弱引用：用于描述非必须的对象，它在下一次垃圾收集时被回收。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;虚引用：无法通过虚引用取得对象实例。
+</p>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;各状态可达性关系图：
+	<hr/>
+	<img src="/images/article/jvm/jvm02-reach.PNG"  alt="对象可达性"  align="center"/>
+</p>
+<h4>3.tips</h4>
+<ul>
+    <li>
+        <p style="margin-left: 2%;">
+            废弃常量的判断：没有任何地方引用该变量。
+        </p>
+    </li>
+	<li>
+        <p style="margin-left: 2%;">
+            &nbsp;&nbsp;&nbsp;&nbsp;无用类的判断：<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;1.java堆中不存在该类的任何实例；<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;2.该类的类加载器已被回收；<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;3.该类对应的java.lang.class对象没有任何地方被引用，无法在任何地方通过反射访问该类的方法。
+        </p>
+    </li>
+</ul>
+<h3>2.垃圾收集算法</h3>
+&nbsp;&nbsp;&nbsp;&nbsp;......<br/>
