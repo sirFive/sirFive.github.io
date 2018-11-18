@@ -123,4 +123,20 @@ tag: JVM
     &nbsp;&nbsp;&nbsp;&nbsp;4.筛选回收：根据回收价值和成本对region排序，并根据用户期望的GC停顿时间制定回收计划；
 </p>
 <h3>4.内存分配与回收策略</h3>
-&nbsp;&nbsp;&nbsp;&nbsp;......<br/>
+<p style="margin-left: 2%;">
+    自动内存管理：给对象分配内存以及回收分配给对象的内存。
+</p>
+<h4>1.分配策略</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;1.对象优先在Eden区分配：当Eden区没有足够空间时将触发一次Minor GC。java堆的内存分配比例：<br/>
+    <img src="/images/article/jvm/jvm02-allocation.PNG"  alt="内存分配"  align="center"/><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;2.大对象直接进入老年代。大对象：需要大量连续内存空间的java对象。参数标准：-xx:PretenureSizeThreshold，
+    大于这个值的为大对象。一般来说有长字符串和数组。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;3.长期存活的对象直接进入老年代。长期存活的对象：经历Minor GC次数：Eden 1次-->Survior n次的对象。
+    n的参数定义：-xx MaxTenuringThreshold，通过这个参数设置。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;4.Survior空间中n岁的对象大小总和大于空间的一半，则大于n岁的对象直接进入老年代，即时n小于参数设定的
+    年龄。<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;注：年龄的定义：对象从Eden区进入Survior区后，在Survior区经过一次Minor GC就是一岁。
+</p>
+<h4>2.空间分配担保</h4>
+<img src="/images/article/jvm/jvm02-assurance.JPG"  alt="空间分配担保"  align="center"/><br/>
