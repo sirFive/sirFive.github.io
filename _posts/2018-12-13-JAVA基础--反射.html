@@ -1,0 +1,186 @@
+---
+layout: post
+title: "秒懂反射"
+date: 2018-11-16
+description: "JAVA基础--反射学习"
+tag: JAVA基础
+---
+<h3>1.概述</h3>
+<p style="margin-left: 2%;">&nbsp;&nbsp;&nbsp;&nbsp;反射就是通过对象的字节码生成对应的对象及对象的各个成员。一个类的成员包括：包名package，
+构造器constructor，属性字段field，普通方法method.因此类的字节码同样是由这四样构成，发射的目的也是获取这四个成员。
+</p>
+<h3>2.获取字节码的三种方式</h3>
+<p style="margin-left: 2%;">
+	<ul>
+		<li>
+			<p style="margin-left: 2%;">
+				类.Class
+			</p>
+		</li>
+		<li>
+			<p style="margin-left: 2%;">
+				对象.getClass();
+			</p>
+		</li>
+		<li>
+			<p style="margin-left: 2%;">
+				Class.forName("类的全路径");
+			</p>
+		</li>
+	</ul>
+	
+	<hr>
+	&nbsp;&nbsp;&nbsp;&nbsp;以Student为例子:<br/>
+		package com.example.demo.reflect1.study;<br/>
+		public class Student {<br/>
+			&nbsp;&nbsp;private String name;<br/>
+			&nbsp;&nbsp;public int age;<br/>
+			&nbsp;&nbsp;private double score;<br/>
+
+			&nbsp;&nbsp;public Student() {}<br/>
+
+			&nbsp;&nbsp;public Student(String name, int age) {<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;this.name = name;<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;this.age = age;<br/>
+			&nbsp;&nbsp;}<br/>
+			
+			&nbsp;&nbsp;public void helloWorld(){<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("hello world！");<br/>
+			&nbsp;&nbsp;}<br/>
+
+			&nbsp;&nbsp;public void hiGirl(String name){<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("good night:"+name+"!");<br/>
+			&nbsp;&nbsp;}<br/>
+		}
+	<hr>
+	&nbsp;&nbsp;&nbsp;&nbsp;<strong>获取字节码的三种方式:</strong><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Class class1 = Student.class;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Student student = new Student();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Class class2 = student.getClass();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Class class3 = Class.forName("com.example.demo.reflect1.study.Student");<br/>
+
+</p>
+<h3>3.通过反射生成对象</h3>
+<h4>1.获取构造器</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;创建一个类是通过构造方法来创建，因此需要先获取字节码中的构造器;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;获取构造器的方法:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;1.获取有（无）参数的构造器<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;class.getConstructor(Class<?>… parameterType); <br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2.获取一个类的所有构造器<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;class.getConstructors();<br/>
+	
+	<hr>
+	&nbsp;&nbsp;&nbsp;&nbsp;栗子：<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;获取所有构造器:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Constructor[] constructor3 = class3.getConstructors();<br/>
+
+	&nbsp;&nbsp;&nbsp;&nbsp;获取构造器(无参数)--Student(){}构造函数也没有参数<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Constructor constructor1 = class3.getConstructor();<br/>
+
+	&nbsp;&nbsp;&nbsp;&nbsp;获取构造器(有参数),从Student(String name, int age) {} 的构造函数可以看出参数为String.class和int.class<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Constructor constructor2 = class3.getConstructor(String.class,int.class);<br/>
+
+	<hr>
+
+</p>
+<h4>2.通过构造器创建对象</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;即通过调用newInstance()方法生成实例对象。<br/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Student student1 = (Student) constructor1.newInstance();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Student student2 = (Student) constructor2.newInstance("xie",25);<br/>
+
+</p>
+<h4>3.总结</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;整体流程就是：获取类的字节码--》通过字节码获取构造器--》通过构造器调用newInstance()生成实例对象.
+</p>
+<h3>4.通过反射获取对象的成员变量</h3>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;通过字节码获取成员属性信息，包括修饰符，类型，名称，值.<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;以 Class studentClass = Class.forName("com.example.demo.reflect1.study.Student");为例子
+</p>
+
+<h4>1.获取属性字段信息</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;1.获取所有的属性字段<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Field[] fields = studentClass.getDeclaredFields();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2.//获取属性为age的字段<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Field field = studentClass.getDeclaredField("age");<br/>
+</p>
+<h4>2.获取属性所在类的全路径</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;获取属性字段所在类的全路径<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;String classPath = field.getDeclaringClass().getTypeName();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("类的全路径："+classPath);
+</p>
+<h4>3.获取修饰符</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;获取修饰符：0默认，1public，2private，4protected<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;int mod =field.getModifiers();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("权限类型："+mod);
+</p>
+<h4>4.获取字段类型</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;int,double还是String等之类<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Class type = field.getType();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("数据类型："+type);<br/>
+</p>
+<h4>5.获取字段名</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;String fieldName = field.getName();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("字段名："+fieldName);<br/>
+</p>
+<h4>6.获取字段的值</h4>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;当修饰符为private的时候不能直接获取，需要fieldAge.setAccessible(true);否则会显示权限不足;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Student student = (Student) studentClass.newInstance();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Object value =field.get(student);<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("age字段值："+value);<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Field fieldAge = studentClass.getDeclaredField("name");<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;私有属性字段需添加<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;fieldAge.setAccessible(true);<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Object valueName =fieldAge.get(student);<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("nmae字段值："+valueName);
+</p>
+<h4>7.结果</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;上面的输出结果为：<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;类的全路径：com.example.demo.reflect1.study.Student<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;权限类型：1<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;字段名：age<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;数据类型：int<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;age字段值：20<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;nmae字段值：null
+</p>
+
+<h3>5.通过反射调用方法</h3>
+<p style="margin-left: 2%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;通过反射调用类里面的成员方法<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Class studentClass = Student.class;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Student student = (Student) studentClass.getConstructor().newInstance();
+</p>
+<h4>1.获取类里面的所有方法</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Methods[] methods = studentClass.getMethods();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;它获取的方法还包括它父类的所有方法，比如在这里它不仅包括Student中的helloWorld()和hiGirl(String Name)，
+	还包括Object的8个方法即toString(),equal,notify()等;
+</p>
+<h4>2.获取和调用某个方法</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;1.获取某个方法:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Method method =studentClass.getMethod("方法名"，方法的参数对应的类型...)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2.调用某个方法<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;method.invoke(方法所在的对象实例,方法参数...);<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;比如：<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;获取并调用student的helloWorld()方法<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Method method1 = studentClass.getMethod("helloWorld");<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;method1.invoke(student);<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;获取并调用student的hiGirl(String name)方法<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Method method2 = studentClass.getMethod("hiGirl",String.class);<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;method2.invoke(student,"y");<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;3.结果:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;hello world！<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;good night:y!
+
+</p>
