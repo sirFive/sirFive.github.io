@@ -20,7 +20,7 @@ tag: 复习
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;1.数据结构类型redis比memecached多，redis只支持String;<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;2.redis支持持久化，memcached不支持;<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;......
+	&nbsp;&nbsp;&nbsp;&nbsp;3.Redis使用单线程的IO复用模型;Memcached是多线程，非阻塞IO复用的网络模型。
 </p>
 <h3>4.redis持久化的两种方式</h3>
 <h4>1.RDB</h4>
@@ -82,7 +82,7 @@ tag: 复习
 	&nbsp;&nbsp;&nbsp;&nbsp;2:做二级缓存，A1为原始缓存，A2为拷贝缓存A1失效时，可以访问A2，A1缓存失效时间设置为短期，A2设置为长期;<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;3:不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。
 </p>
-<h3>10.redi的架构模式</h3>
+<h3>10.redis的架构模式</h3>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;https://www.cnblogs.com/jasontec/p/9699242.html<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;单机版、主从复制、哨兵模式、集群模式。<br/>
