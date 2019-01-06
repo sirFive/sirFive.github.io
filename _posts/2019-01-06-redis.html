@@ -1,0 +1,44 @@
+---
+layout: post
+title: "redis"
+date: 2018-11-18
+description: "复习--redis"
+tag: 复习
+---
+<h3>1.什么是Redis</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Redis是一个基于内存的高性能key-value数据库。
+</p>
+<h3>2.Redis的特点</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;1.性能出色：它的数据操作是在内存中进行，定期通过一部来将数据保存到硬盘上进行保存，每秒
+	可以出出力超过10万次的读写操作。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2.支持多种数据结构：string、list、hash、set、zset，单个value的最大限制是1G（memcached是1M）。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;3.缺点：数据容量受到内存的限制，不能做海量数据的高性能读写。
+</p>
+<h3>3.redis相比memcached有哪些优势</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;1.数据结构类型redis比memecached多，redis只支持String;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2.redis支持持久化，memcached不支持;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;......
+</p>
+<h3>4.redis持久化的两种方式</h3>
+<h4>1.RDB</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;RDB持久化是指在指定的时间内将内存的数据快照写入磁盘，具体执行过程是fork一个字进程，先将数据写
+	做临时文件，写入成功后再替换之前的文件，用二进制压缩存储。策略有：save 900 1、save 300 10、save 60 10000。
+</p>
+<h4>4.AOF</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;AOF是以日志的形式记录服务器所处理的每一条写、删命令（不记录读）。
+	同步策略：每修改同步、每秒同步、不同步。（redis的默认持久化方式）
+</p>
+<h3>5.redis常见性能问题和解决方案</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;1.Master写内存快照：save命令会调用rdbSave函数，它会阻塞主线程工作。因此Master最好不要
+	读写内存快照。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2.Master AOF持久化：虽然该方式的持久化对性能影响最小，但是AOF后面会越来走越大，而AOF文件
+	过大会影响Master重启的恢复速度。因此Master最好不要做持久化工作，某个salave开启AOF数据备份就好。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;3.Redis的主从复制性能问题，为了主从复制的速度和连接的稳定性，salave最好和master在同一局域网内。<br/>
+</p>
+
