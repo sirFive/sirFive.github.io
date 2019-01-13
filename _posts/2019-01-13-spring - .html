@@ -1,0 +1,111 @@
+---
+layout: post
+title: "Spring"
+date: 2019-01-13
+description: "复习--Spring"
+tag: 复习
+---
+<h3>1.什么是Spring</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Spring是一个轻量级的、开源的javaEE开源框架，它实现了IOC和AOP。
+</p>
+<h3>2.IOC与DI的区别</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Ioc（反转控制）：将对象的创建权交由spring管理，而解放手动创建对象的过程，达到低耦合度的目的。
+	实现原理：将需要的类名配置（注入到）到配置文件中，然后在使用的时候spring利用反射技术动态的生成和创建这个类。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;DI(依赖注入):在spring创建对象的过程中,把对象的属性注入到类中。依赖注入的三种方式:构造器注入、Setter方法注入、接口注入。<br/>
+</p>
+<h3>3.bean的自动装配</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;定义：Spring 容器能够自动装配相互合作的bean，这意味着容器不需要<constructor-arg>和<property>配置，能通过Bean工厂自动处理bean之间的协作。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;spring容器装配Bean的方式：xml配置和注解配置。基于xml自动装配的三种方式：ByName,ByType,ByConstructor( ByType要存在set方法);基于注解的自动装配的方式：@Autowired，@Resource，@value.
+	使用注解时必须启动注解驱动:<context:annotation-config />1.@Autowired 注释，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。 通过 @Autowired的使用标注到成员变量时不需要有set方法，
+	请注意@Autowired 默认按类型匹配的;2. @Autowried具备相同功效的还有@Resource，默认按 byName模式 自动注入;3.@Value上述两种自动装配的依赖注入并不适合简单值类型。
+</p>
+<h3>4.spring有哪些模块</h4>
+<h4>1.模块分类</h4>
+<p style="margin-left: 2%;">
+	<img src="/images/article/spring/spring-model.jpg"  alt="spring模块图"  align="center"/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Spring框架至今已集成了20多个模块。这些模块主要被分如下图所示的核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。<br/>
+</p>
+<h4>2.核心容器（应用上下文) 模块</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;这是基本的Spring模块，提供spring 框架的基础功能，BeanFactory 是 任何以spring为基础的应用的核心。Spring 框架建立在此模块之上，它使Spring成为一个容器。
+</p>
+ 
+
+<h3>5.spring bean的生命周期</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;参考：https://www.cnblogs.com/redcool/p/6397398.html<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;1. 实例化一个Bean，也就是我们通常说的new;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2. 按照Spring上下文对实例化的Bean进行配置，也就是IOC注入;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;3. 如果这个Bean实现了BeanNameAware接口，会调用它实现的setBeanName(String beanId)方法，此处传递的是Spring配置文件中Bean的ID;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;4. 如果这个Bean实现了BeanFactoryAware接口，会调用它实现的setBeanFactory()，传递的是Spring工厂本身（可以用这个方法获取到其他Bean）;<br/><br/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;5. 如果这个Bean实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文，该方式同样可以实现步骤4，但比4更好，以为ApplicationContext是BeanFactory的子接口，有更多的实现方法;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;6. 如果这个Bean关联了BeanPostProcessor接口，将会调用postProcessBeforeInitialization(Object obj, String s)方法，BeanPostProcessor经常被用作是Bean内容的更改，并且由于这个是在Bean初始化结束时调用After方法，也可用于内存或缓存技术;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;7. 如果这个Bean在Spring配置文件中配置了init-method属性会自动调用其配置的初始化方法;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;8. 如果这个Bean关联了BeanPostProcessor接口，将会调用postAfterInitialization(Object obj, String s)方法;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;注意：以上工作完成以后就可以用这个Bean了，那这个Bean是一个single的，所以一般情况下我们调用同一个ID的Bean会是在内容地址相同的实例;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;9. 当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean接口，会调用其实现的destroy方法;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;10. 最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;这里描述的是应用Spring上下文Bean的生命周期，如果应用Spring的工厂也就是BeanFactory的话去掉第5步就Ok了。
+</p>
+<h3>6.BeanFactory和applicationContext的区别</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;BeanFactory实例：是工厂模式的一种体现，它通过反转控制和依赖注入将与实际应用的代码分离出来。org.springframework.beans.factory.xml.XmlBeanFactory，它根据xml文件中定义的内容加载bean，该容器从xml文件中读取配置元数据，并用它来创造一个完备的系统和应用。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;BeanFactory是spring里面最底层的接口，但它提供了实例化对象和拿对象的功能。ApplicationContext继承了BeanFactory,它提供的功能更加丰富：国际化、访问资源、AOP等。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;两者装配Bean的区别：BeanFactory在启动的时候不会去实例化Bean，只有从容器中拿Bean的时候才会去实例化;ApplicationContext在启动的时候就把所有的Bean全部实例化了。它还可以为Bean配置lazy-init=true来让Bean延迟实例化。
+</p>
+
+<h3>7.bean的作用域</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Singleton(spring默认的)：每一个Bean的实例只会被创建一次，而且Spring容器在整个应用程序生存期中都可以使用该实例。因此之前的代码中spring容器创建Bean后，通过代码获取的bean，无论多少次，都是同一个Bean的实例;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;prototype: 它代表每次获取Bean实例时都会新创建一个实例对象，类似new操符.<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;request和session作用域：对于request作用域，对于每次HTTP请求到达应用程序，Spring容器会创建一个全新的Request作用域的bean实例，且该bean实例仅在当前HTTP request内有效，整个请求过程也只会使用相同的bean实例。同理session也是每当创建一个新的HTTP Session时就会创建一个Session作用域的Bean，并该实例bean伴随着会话的存在而存在;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;globalSession:类似于session作用域，相当于一个全局变量.<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;总结：显然singletonBean永远只有一个实例，而PrototypeBean则每次被获取都会创建新的实例，对应RequestBean，在同一次Http请求过程中是同一个实例，当请求结束，RequestBean也随着销毁，在新的Http请求则会生成新的RequestBean实例，对于SessionBean，由于是在同一个浏览器中访问属于同一次会话，因此SessionBean实例都是同一个实例对象（＜bean＞标签的scope属性来指定一个Bean的作用域)
+</p>
+<h3>8.Spring框架中的单例Beans是线程安全的么？</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Spring框架并没有对单例bean进行任何多线程的封装处理。关于单例bean的线程安全和并发问题需要开发者自行去搞定。但实际上，大部分的Spring bean并没有可变的状态(比如Serview类和DAO类)，所以在某种程度上说Spring的单例bean是线程安全的。如果你的bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全。
+最浅显的解决办法就是将多态bean的作用域由“singleton”变更为“prototype”。
+</p>
+<h3>9.Spring如何处理线程并发问题？</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;我们知道在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域。就是因为Spring对一些Bean(如RequestContextHolder、TransactionSynchronizationManager、LocaleContextHolder等)中非线程安全状态采用ThreadLocal进行处理，让它们也成为线程安全的状态，因为有状态的Bean就可以在多线程中共享了.
+</p>
+<h3>10.aop</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;aop:aop的出现将核心业务代码模块与外围业务代码（日志、事物控制、性能、权限等）模块分离。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;aop原理：Spring AOP的实现原理是基于动态织入的动态代理技术，而AspectJ则是静态织入，而动态代理技术又分为Java JDK动态代理和CGLIB动态代理，前者是基于反射技术的实现，后者是基于继承的机制实现。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;springAop的5种通知方式:前置通知、后置通知、异常通知、最终通知以及环绕通知。
+</p>
+<h3>11.事物</h3>
+<h4>1.Spring的事务管理类型</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Spring支持两种类型的事务管理：编程式事务管理：这意味你通过编程的方式管理事务，给你带来极大的灵活性，但是难维护。
+	&nbsp;&nbsp;&nbsp;&nbsp;声明式事务管理：这意味着你可以将业务代码和事务管理分离，你只需用注解和XML配置来管理事务。
+</p>
+<h4>2. Spring框架的事务管理有哪些优点？</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;它为不同的事务API 如 JTA，JDBC，Hibernate，JPA 和JDO，提供一个不变的编程模式;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;它为编程式事务管理提供了一套简单的API而不是一些复杂的事务API如;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;它支持声明式事务管理;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;它和Spring各种数据访问抽象层很好得集成。
+</p>
+<h4>3.你更倾向用那种事务管理类型?</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;大多数Spring框架的用户选择声明式事务管理，因为它对应用代码的影响最小，因此更符合一个无侵入的轻量级容器的思想。声明式事务管理要优于编程式事务管理，虽然比编程式事务管理（这种方式允许你通过代码控制事务）少了一点灵活性。
+</p>
+<h3>12.Spring 框架中都用到了哪些设计模式？</h3>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Spring框架中使用到了大量的设计模式，下面列举了比较有代表性的：
+	&nbsp;&nbsp;&nbsp;&nbsp;单例模式—在spring配置文件中定义的bean默认为单例模式。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;工厂模式—BeanFactory用来创建对象的实例。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;代理模式—在AOP和remoting中被用的比较多。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;模板方法—用来解决代码重复的问题。比如. RestTemplate, JmsTemplate, JpaTemplate。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;前端控制器—Spring提供了DispatcherServlet来对请求进行分发。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;视图帮助(View Helper )—Spring提供了一系列的JSP标签，高效宏来辅助将分散的代码整合在视图里。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;依赖注入—贯穿于BeanFactory / ApplicationContext接口的核心理念。
+</p>
+
