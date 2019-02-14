@@ -11,14 +11,14 @@ tag: 复习
 </p>
 <h3>2.Redis的特点</h3>
 <p style="margin-left: 2%;">
-	&nbsp;&nbsp;&nbsp;&nbsp;1.性能出色：它的数据操作是在内存中进行，定期通过一部来将数据保存到硬盘上进行保存，每秒
-	可以出出力超过10万次的读写操作。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;1.性能出色：它的数据操作是在内存中进行，通过定期将一部数据保存到硬盘上，每秒
+	可以处理超过10万次的读写操作。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;2.支持多种数据结构：string、list、hash、set、zset，单个value的最大限制是1G（memcached是1M）。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;3.缺点：数据容量受到内存的限制，不能做海量数据的高性能读写。
 </p>
 <h3>3.redis相比memcached有哪些优势</h4>
 <p style="margin-left: 2%;">
-	&nbsp;&nbsp;&nbsp;&nbsp;1.数据结构类型redis比memecached多，redis只支持String;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;1.数据结构类型redis比memecached多，memecached只支持String;<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;2.redis支持持久化，memcached不支持;<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;3.Redis使用单线程的IO复用模型;Memcached是多线程，非阻塞IO复用的网络模型。
 </p>
