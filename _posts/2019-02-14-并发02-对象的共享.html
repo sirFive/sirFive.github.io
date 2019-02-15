@@ -38,6 +38,36 @@ tag: Java并发编程实战
 </p>
 
 <h3>2.发布与逸出</h3>
+<h4>1.发布与逸出的定义</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;发布一个对象：使对象能够在当前作用域之外的代码中使用（即：在其它地方使用这个对象）。被发布的对象要确保对象及内部状态不被发布，如果一定要发布则一定要确保其安全性。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;逸出：某个不应该发布的对象被发布会产生逸出。
+</p>
+<h4>2.安全对象构造过程</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;不要在构造过程中使this引用逸出，比如在构造函数中启动一个线程，this引用会被会被新创建的线程共享。如果一定要在构造函数中创建线程，最好不要立刻启动，而是通过一个start或initialize方法来启动。
+</p>
+<h3>3.线程封闭</h3>
+<h4>1.线程封闭的定义</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;当访问共享的可变数据时，通常需要使用同步。如果仅在单线程访问数据，就不需要使用同步，这种技术就是线程封闭。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;当某个对象封闭在一个线程时将自动实现线程安全性。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;当决定使用线程封闭技术时，通常是因为要将某个特定的子系统实现为一个单线程子系统。
+</p>
+<h4>2.Ad-hoc线程封闭</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;Ad-hoc线程封闭是指维护线程封闭的职责完全由程序实现来承担。Ad-hoc线程封闭很脆弱，不建议使用，只有在特定情况下才使用。
+</p>
+<h4>3.栈封闭</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;堆栈封闭其实就是方法中定义局部变量。不存在并发问题。多个线程访问一个方法的时候，方法中的局部变量都会被拷贝一份到线程的栈中（Java内存模型），所以局部变量是不会被多个线程所共享的。
+</p>
+<h4>4.ThreadLocal类</h4>
+<p style="margin-left: 2%;">
+	&nbsp;&nbsp;&nbsp;&nbsp;是一种更好的线程封闭的方法。ThreadLocal内部维护了一个map,map的key是每个线程的名称，而map的value就是我们要封闭的对象。ThreadLocal提供了get、set、remove方法，每个操作都是基于当前线程的，所以它是线程安全的。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;ThreadLocal对象通常用于防止对可变的变量实例或全局变量进行共享。当某个频繁执行的操作需要一个临时对象，同时又希望避免在每次执行时都需要重新分配该临时对象，就可以使用这项技术。
+</p>
+<h3>4.不变性</h3>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;未完待续。。。
 </p>
