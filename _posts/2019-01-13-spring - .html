@@ -38,7 +38,7 @@ tag: 复习
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;参考：https://www.cnblogs.com/redcool/p/6397398.html<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;1. 实例化一个Bean，也就是我们通常说的new;<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;2. 按照Spring上下文对实例化的Bean进行配置，也就是IOC注入;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2. 按照Spring上下文对实例化的Bean进行配置，也就是依赖注入;<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;3. 如果这个Bean实现了BeanNameAware接口，会调用它实现的setBeanName(String beanId)方法，此处传递的是Spring配置文件中Bean的ID;<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;4. 如果这个Bean实现了BeanFactoryAware接口，会调用它实现的setBeanFactory()，传递的是Spring工厂本身（可以用这个方法获取到其他Bean）;<br/><br/><br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;5. 如果这个Bean实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文，该方式同样可以实现步骤4，但比4更好，以为ApplicationContext是BeanFactory的子接口，有更多的实现方法;<br/>
