@@ -108,4 +108,22 @@ tag: 复习
 	&nbsp;&nbsp;&nbsp;&nbsp;视图帮助(View Helper )：Spring提供了一系列的JSP标签，高效宏来辅助将分散的代码整合在视图里。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;依赖注入：贯穿于BeanFactory / ApplicationContext接口的核心理念。
 </p>
+<h3>13.Spring 事物的传播特性</h3>
+	<p style="margin-left: 2%;">
+		&nbsp;&nbsp;&nbsp;&nbsp;Propagation-Required 需要 如果存在一个事务，则支持当前事务。如果没有事务则开启。</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;Propagation-Supports 支持 如果存在一个事务，支持当前事务。如果没有事务，则非事务的执行.</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;Propagation-Mandatory 必要的 如果已经存在一个事务，支持当前事务。如果没有一个活动的事务，则抛出异常。</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;Propagation-required_new 总是开启一个新的事务。如果一个事务已经存在，则将这个存在的事务挂起。</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;Propagation-Not_support 总是非事务地执行，并挂起任何存在的事务。</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;Propagation-Never 绝不 总是非事务地执行，如果存在一个活动事务，则抛出异常</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;Propagation-Nested 嵌套的 如果有就嵌套、没有就开启事务。
+	</p>
+<h3>14.Spring 事物的隔离级别</h3>
+	<p style="margin-left: 2%;">
+		&nbsp;&nbsp;&nbsp;&nbsp;ISOLATION_DEFAULT： 这是一个PlatfromTransactionManager默认的隔离级别，使用数据库默认的事务隔离级别.另外四个与JDBC的隔离级别相对应。</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;ISOLATION_READ_UNCOMMITTED： 这是事务最低的隔离级别，它充许令外一个事务可以看到这个事务未提交的数据。这种隔离级别会产生脏读，不可重复读和幻像读。</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;ISOLATION_READ_COMMITTED： 保证一个事务修改的数据提交后才能被另外一个事务读取。另外一个事务不能读取该事务未提交的数据</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;ISOLATION_REPEATABLE_READ： 这种事务隔离级别可以防止脏读，不可重复读。但是可能出现幻像读。它除了保证一个事务不能读取另一个事务未提交的数据外，还保证了避免下面的情况产生(不可重复读)。</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;ISOLATION_SERIALIZABLE 这是花费最高代价但是最可靠的事务隔离级别。事务被处理为顺序执行。除了防止脏读，不可重复读外，还避免了幻像读。</br>
 
+	</p>
