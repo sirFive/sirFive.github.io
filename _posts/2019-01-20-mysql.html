@@ -6,20 +6,20 @@ description: "复习MySQL"
 tag: 复习
 ---
 <h3>1.数据库访问的优化法则</h3>
-<h4>1.总体概述</h4>
+<h4>总体概述</h4>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;1.减少磁盘访问：减少数据库的访问。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;2.减少网络传输：返回更少数据，减少交互次数。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;3.减少CPU及内存开销：减少服务器CPU开销。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;4.增加资源：利用更多资源。
 </p>
-<h4>1.减少数据访问</h4>
+<h4>1.减少数据库的访问</h4>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;创建并使用正确的索引；只通过索引访问数据；优化sql执行计划。
 </p>
 <h4>2.返回更少的数据，减少交互次数</h4>
 <p style="margin-left: 2%;">
-	&nbsp;&nbsp;&nbsp;&nbsp;数据分页处理：客户端分页、服务端分页、数据库sql分页。回只需要的字段。减少交互次数：对增删改进行批处理，使用存储过程、优化业务逻辑。
+	&nbsp;&nbsp;&nbsp;&nbsp;数据分页处理：客户端分页、服务端分页、数据库sql分页。只返回需要的字段。减少交互次数：对增删改进行批处理，使用存储过程、优化业务逻辑。
 </p>
 <h4>3.减少服务器CPU开销</h4>
 <p style="margin-left: 2%;">
