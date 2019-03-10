@@ -52,7 +52,7 @@ tag: 复习
 </p>
 <h3>6.BeanFactory和applicationContext的区别</h3>
 <p style="margin-left: 2%;">
-	&nbsp;&nbsp;&nbsp;&nbsp;BeanFactory实例：是工厂模式的一种体现，它通过反转控制和依赖注入将与实际应用的代码分离出来。org.springframework.beans.factory.xml.XmlBeanFactory，它根据xml文件中定义的内容加载bean，该容器从xml文件中读取配置元数据，并用它来创造一个完备的系统和应用。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;BeanFactory实例：是工厂模式的一种体现，它通过反转控制和依赖注入将与实际应用的代码分离出来。org.springframework.beans.factory.xml.XmlBeanFactory，它根据xml文件中定义的内容加载bean，该方法从xml文件中读取配置元数据，并用它来创造一个完备的系统和应用。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;BeanFactory是spring里面最底层的接口，但它提供了实例化对象和拿对象的功能。ApplicationContext继承了BeanFactory,它提供的功能更加丰富：国际化、访问资源、AOP等。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;两者装配Bean的区别：BeanFactory在启动的时候不会去实例化Bean，只有从容器中拿Bean的时候才会去实例化;ApplicationContext在启动的时候就把所有的Bean全部实例化了。它还可以为Bean配置lazy-init=true来让Bean延迟实例化。
 </p>
