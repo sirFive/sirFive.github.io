@@ -38,7 +38,7 @@ tag: 复习
 </p>
 <h4>7.Xml映射文件中，除了常见的select|insert|updae|delete标签之外，还有哪些标签？</h4>
 <p style="margin-left: 2%;">
-	&nbsp;&nbsp;&nbsp;&nbsp;还有很多其他的标签：resultMap、parameterMap、sql、include、selectKey，其中sql标签为sql片段标签，通过include标签引入sql片段，selectKey标签为不支持自增的主键生成策略标签；加上动态sql的9个标签，trim|where|set|foreach|if|choose|when|otherwise|bind等。
+	&nbsp;&nbsp;&nbsp;&nbsp;还有很多其他的标签：resultMap、parameterMap、sql、include、selectKey，其中sql标签为sql片段标签，通过include标签引入sql片段，selectKey标签为不支持自增的主键生成策略标签；加上动态sql的9个标签:when|where|if|otherwise|foreach|trim|set|choose|bind。
 </p>
 <h4>8.在mapper中如何传递多个参数?</h4>
 <p style="margin-left: 2%;">
@@ -47,7 +47,7 @@ tag: 复习
 <h4>9.Mybatis动态sql是做什么的？都有哪些动态sql？能简述一下动态sql的执行原理不？</h4>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;Mybatis动态sql可以让我们在Xml映射文件内，以标签的形式编写动态sql，完成逻辑判断和动态拼接sql的功能。<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;Mybatis提供了9种动态sql标签：trim|where|set|foreach|if|choose|when|otherwise|bind。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Mybatis提供了9种动态sql标签：when|where|if|otherwise|foreach|trim|set|choose|bind。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;其执行原理为，使用OGNL从sql参数对象中计算表达式的值，根据表达式的值动态拼接sql，以此来完成动态sql的功能。
 </p>
 <h4>10.Mybatis的Xml映射文件中，不同的Xml映射文件，id是否可以重复？</h4>
