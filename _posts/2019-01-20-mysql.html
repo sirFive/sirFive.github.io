@@ -88,25 +88,37 @@ tag: 复习
 	&nbsp;&nbsp;&nbsp;&nbsp;select_type：查询中每个 select 子句的类型。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;table:名字，被操作的对象名称，通常的表名(或者别名)，但是也有其他格式。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;partitions:匹配的分区信息。<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;type:join 类型。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;type:索引类型<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;possible_keys：列出可能会用到的索引。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;key:实际用到的索引。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;key_len:用到的索引键的平均长度，单位为字节。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;ref:表示本行被操作的对象的参照对象，可能是一个常量用 const 表示，也可能是其他表的。<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;key 指向的对象，比如说驱动表的连接列。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;rows:估计每次需要扫描的行数。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;filtered:rows*filtered/100 表示该步骤最后得到的行数(估计值)。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;extra:重要的补充信息
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;type级别：system>const>eq_ref>ref>range>index>all<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;system：只有一条数据的系统表（很难达到）<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;const：仅能查出一条语句,并且用了unique或者primary key索引。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;eq_ref:唯一索引。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;ref：普通索引。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;range：检索指定范围的行，where后面是一个范围查询。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;index：检索全部索引中的数据。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;all：全表扫描。
 </p>
 <h4>2.profile的意义以及使用场景</h4>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;Profile 用来分析 sql 性能的消耗分布情况。当用 explain 无法解决慢 SQL 的时候，需要用profile 来对 sql 进行更细致的分析，找出 sql 所花的时间大部分消耗在哪个部分，确认 sql的性能瓶颈。
 </p>
-<h4>6.explain 中的索引问题</h4>
+<h4>3.explain 中的索引问题</h4>
 <p style="margin-left: 2%;">
-	&nbsp;&nbsp;&nbsp;&nbsp;Explain 结果中，一般来说，要看到尽量用 index(type为const、ref等，key列有值)，避免使用全表扫描(type 显式为 ALL)。比如说有 where 条件且选择性不错的列，需要建立索引。
-	被驱动表的连接列，也需要建立索引。被驱动表的连接列也可能会跟 where 条件列一起建立联合索引。当有排序或者 group by 的需求时，也可以考虑建立索引来达到直接排序和汇总的需求。
+	&nbsp;&nbsp;&nbsp;&nbsp;Explain 结果中，一般来说，要看到尽量用 index(type为eq_ref、ref等，key列有值)，避免使用全表扫描(type 显式为 ALL)。比如说有 where 条件且选择性不错的列，需要建立索引。
+	被驱动表的连接列，也需要建立索引。被驱动表的连接列也可能会跟 where 条件列一起建立联合索引。当有排序或者 group by 的需求时，也可以考虑建立索引来达到直接排序和汇总的需求。</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;建立索引的时候要根据列基数来建立。列基数=列中不同的数据/列总数据。（越接近1，重复数据越少，越适合建立索引）</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;如果查询出来的数据超过总数的1/3，索引会失效。
 </p>
+
 <h3>7.MySQL中varchar与char的区别以及varchar(50)中的50代表的涵义</h3>
 <h4>1.varchar与char的区别</h4>
 <p style="margin-left: 2%;">
