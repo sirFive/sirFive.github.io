@@ -73,7 +73,11 @@ tag: 复习
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;经过优化的B+树。主要是在所有的叶子结点中增加了指向下一个叶子节点的指针，因此InnoDB建议为大部分表使用默认自增的主键作为主索引。
 </p>
-<h4>3.什么情况下设置了索引但无法使用 </h4>
+<h4>3.建立索引的要求</h4>
+<p style="margin-left: 2%;">
+	建立索引的时候要根据列基数来建立。列基数=列中不同的数据/列总数据。（越接近1，重复数据越少，越适合建立索引） 如果查询出来的数据超过总数的1/3，索引会失效。
+</p>
+<h4>4.什么情况下设置了索引但无法使用 </h4>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;① 以“%”开头的LIKE语句，模糊匹配。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;② OR语句前后没有同时使用索引。<br/>
@@ -150,8 +154,8 @@ tag: 复习
 <h4>3.不同隔离级别之间的现象</h4>
 <p style="margin-left: 2%;">
 	&nbsp;&nbsp;&nbsp;&nbsp;Read Uncommitted:可以读取其他 session 未提交的脏数据。会出现脏读、不可重复读、幻读；<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;Read Committed:提交后，其他会话可以看到提交的数据。不会出现脏读，会出现不可重复读、幻读；<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;Repeatable Read: 不会出现脏读、不可重复读、会出现幻读(innodb 独有)。<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Read Committed:提交后，其他会话可以看到提交的数据。不会出现脏读，会出现不可重复读、幻读；(ORACLE默认隔离级别)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;Repeatable Read: 不会出现脏读、不可重复读、会出现幻读(innodb 独有)。(MYSQL默认隔离级别)<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;Serializable: 事务只能一个接着一个地执行，但不能并发执行。事务隔离级别最高。<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;不同的隔离级别有不同的现象，并有不同的锁定/并发机制，隔离级别越高，数据库的并发性就越差。<br/>
 </p>
