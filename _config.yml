@@ -20,9 +20,9 @@ social:
     mail: 348627749@qq.com
 
 # 百度统计 
-# 使用博客模板请去掉或者更换 id 
+# https://tongji.baidu.com/sc-web/10000034379/home/site/getjs?siteId=13753674
 baidu:
-#    id: 8ba1c6be0953b6f9c2ba38e57f615421  
+    id: 61715519371fb834bbb4a7d08bc3430e
 
 # Google Analytics
 # 使用博客模板请去掉或者更换 id
