@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hadoop介绍"
+title: "Hadoop01"
 date: 2019-11-30
 description: "hadoop历史、hadoop存储模型、架构模型、读写流程、伪分布式安装"
 tag: Hadoop
