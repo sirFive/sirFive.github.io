@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hadoop介绍01"
+title: "Hadoop介绍"
 date: 2019-11-30
 description: "hadoop历史、hadoop存储模型、架构模型、读写流程、伪分布式安装"
 tag: Hadoop
@@ -25,13 +25,50 @@ block可以设置副本数，副本无序散列在不同的节点中（设置副
 文件上传可以设置block大小（系统默认1M~128M）和副本数）和副本数；已经上传的文件block副本数可以调整，但是
 大小不能改变，大小改变会造成所有的索引都会变。  
 只支持一次写入多次读取，同一时刻只有一个写入者。  
-可以append追加数据。
+可以append追加数据。  
+![设计思想](/images/article/hadoop/HDFS设计思想.jpg "HDFS设计思想") 
 ### 3.hadoop架构模型
 架构模型-主从架构  
 文件元数据MetaData，文件数据:元数据\数据本身。  
 （主）NameNode节点保存文件元数据(文件名、文件大小、偏移量等)：单节点、posix等。  
 （从）DataNode节点保存文件Block数据（具体的数据）：多节点存储。  
 DataNode与NameNode保持心跳，DataNode向NameNode提交Block列表。  
-HdfsClient与NameNode交互元数据信息。  
+HdfsClient与NameNode交互元数据信息（数据在什么地方，数据大小等）。  
 HdfsClient与DataNode交互文件Block数据（cs模式）。  
 DataNode利用服务器本地文件系统存储数据块。  
+![架构图](/images/article/hadoop/HDFS架构图.jpg "HDFS架构图") 
+### 4.hadoop持久化
+#### 1.NameNode（NN）
+NameNode是基于内存的存储（不会和磁盘发生交换（双向的交换）），只存在于内存中。因此他需要进行持久化操作（和Redis类似）否则服务器
+发生故障就会造成数据丢失。
+#### 2.NameNode主要功能
+接收客户端的读写信息；收集DataNode汇报的Block列表信息（metadata信息），包括：文件owership、permissions、文件大小、时间、
+Block列表：Block偏移量），位置信息（持久化不存（存了之后如果第一个发生变化会导致其它的都会发生变化，
+持久化到内存的数据信息就不是准确的））、Block每副本位置（持久化不存，由DataNode上报）。
+#### 3.NameNode持久化过程
+NameNode的metadata信息在启动后会加载到内存，metadata存储到磁盘文件名为”fsimage”（时点备份）即磁盘镜像文件，注意：Block的位置信息不会保存到fsimage
+同时，edits文件记录用户对metadata的操作日志。具体是：当edits文件达到一定大小（fs.checkpoint.size，可配，默认64M）
+或者达到一定间隔时间（fs.checkpoint.period，可配，默认3600秒）后，在SecondaryNameNode的帮助下合并fsimage和edits log。从而
+达到减少NameNode的启动时间的作用。(相比加载edits log并执行，系统加载磁盘镜像文件会更快，因为磁盘镜像文件经过序列化处理。fsimage恢复快，edit log 写的快)  
+![SNN合并流程](/images/article/hadoop/SNN合并流程.jpg "SNN合并流程") 
+#### 4.DataNode
+以文件形式在本地磁盘目录存储数据（Block），同时存储Block的元数据信息文件。  
+启动DN时会向NN汇报block信息:通过向NN发送心跳保持与其联系（3秒一次），如果NN 10分钟没有收到DN的心跳，则认为其已经lost，并copy其上的block到其它DN
+### 5.hdfs优缺点
+#### 1.优点
+高容错性：数据自动保存在多个副本；副本丢失后，自动恢复。  
+适合批处理：移动计算而非数据;数据位置暴露给计算框架（Block偏移量）。  
+适合大数据处理：GB 、TB 、甚至PB 级数据；百万规模以上的文件数量; 单个节点的文件大小至少10k。  
+可构建在廉价机器上：通过多副本提高可靠性;提供了容错和恢复机制。
+#### 2.缺点
+不支持低延迟数据访问：比如毫秒级（它的处理时间都是以秒为单位）、不支持低延迟与高吞吐率。  
+小文件存取：出现占用NameNode大量内存（NN要记录小文件的metadata）、小文件多寻道时间超过读取时间。  
+不支持并发写入、文件随机修改：一个文件只能有一个写者；仅支持append。
+### 6.Block的副本放置策略
+第一个副本：放置在上传文件的DN；如果是集群外提交，则随机挑选一台磁盘不太满，CPU不太忙的节点。  
+第二个副本：放置在于第一个副本不同的 机架的节点上。  
+第三个副本：与第二个副本相同机架的不同节点。  
+更多副本：随机节点。  
+![block副本放置策略](/images/article/hadoop/block副本放置策略.jpg "block副本放置策略") 
+### 7.hadoop的写流程
+
