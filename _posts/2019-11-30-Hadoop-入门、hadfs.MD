@@ -134,7 +134,7 @@ HDFS的权限目的：阻止误操作，但不绝对。HDFS相信，你告诉我
 ![配置secondaryNameNode](/images/article/hadoop/伪分布式/14配置secondaryNameNode.jpg "配置secondaryNameNode")
 #### 9.配置临时目录
 在core-site.xml中配置临时目录，用来存放nameNode，dataNode和nameSecondary的文件。如nameNode中存放edit_log，fsimage等；dataNode存放上传的文件等。  
-![配置临时目录](/images/article/hadoop/伪分布式/15配置secondaryNameNode.jpg "配置临时目录")
+![配置临时目录](/images/article/hadoop/伪分布式/15配置临时目录.jpg "配置临时目录")
 #### 10.格式化生成fsimage
 ![格式化生成fsimage](/images/article/hadoop/伪分布式/16格式化生成fsimage.jpg "格式化生成fsimage")  
 格式化成功后会在临时目录下生成dfs目录和其子目录name的子目录中生成fsimage文件。  
@@ -149,8 +149,36 @@ HDFS的权限目的：阻止误操作，但不绝对。HDFS相信，你告诉我
 创建文件上传的路径。  
 ![文件上传的路径](/images/article/hadoop/伪分布式/20创建文件上传的路径.jpg "文件上传的路径")  
 上传文件：hdfs dfs -put
-![上传文件](/images/article/hadoop/伪分布式/21上传文件.jpg "上传文件")  
+![上传文件](/images/article/hadoop/伪分布式/21文件上传.jpg "上传文件")  
 上传过程中,可视化界面的显示如下：  
 ![上传过程中](/images/article/hadoop/伪分布式/22上传过程中.jpg "上传过程中")  
 上传完成可以看到，可视化界面中有两个block，因为系统默认一个block的大小是128M，而我上传的文件是170M，所以分成了两块。  
 ![上传完成](/images/article/hadoop/伪分布式/23上传完成.jpg "上传完成")
+### 9.配置的代码
+#### 1.免秘钥配置
+```
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+```
+#### 2.core-site.xml
+```
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://node06:9000</value>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/var/sxt/hadoop/local</value>
+    </property>
+```
+#### 3.hdfs-site.xml
+```
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>node06:50090</value>
+    </property>
+```
