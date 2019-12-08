@@ -101,3 +101,56 @@ HDFS的权限目的：阻止误操作，但不绝对。HDFS相信，你告诉我
 3）此刻namenode运行在安全模式。即namenode的文件系统对于客服端来说是只读的。(显示目录，显示文件内容等。写、删除、重命名都会失败，尚未获取动态信息)。  
 4）在此阶段Namenode收集各个datanode的报告，当数据块达到最小副本数以上时，会被认为是“安全”的， 在一定比例（可设置）的数据块被确定为“安全”后，再过若干时间，安全模式结束。  
 5）当检测到副本数不足的数据块时，该块会被复制直到达到最小副本数，系统中数据块的位置并不是由namenode维护的，而是以块列表形式存储在datanode中。
+### 8.hadoop伪分布式的安装
+#### 1.jdk的安装
+1.安装jdk  
+![jdk的安装](/images/article/hadoop/伪分布式/1jdk安装.jpg "jdk的安装")  
+2.配置jdk环境变量  
+![jdk环境变量配置](/images/article/hadoop/伪分布式/2jdk.jpg "jdk环境变量配置")  
+![jdk环境变量配置](/images/article/hadoop/伪分布式/3jdk.jpg "jdk环境变量配置")  
+![jdk环境变量配置](/images/article/hadoop/伪分布式/4jdk.jpg "jdk环境变量配置")
+#### 2.免秘钥登录配置
+配置目的：避免访问节点时每次都需要输入账号密码。  
+![免秘钥配置](/images/article/hadoop/伪分布式/5免秘钥.jpg "免秘钥配置")  
+![免秘钥配置](/images/article/hadoop/伪分布式/6免秘钥.jpg "免秘钥配置")  
+配置成功后会在.ssh目录下多一个公钥的文件。  
+![免秘钥配置](/images/article/hadoop/伪分布式/7免秘钥.jpg "免秘钥配置")
+#### 3.hadoop环境变量配置
+![hadoop环境变量配置](/images/article/hadoop/伪分布式/8hadoop环境变量.jpg "hadoop环境变量配置")
+#### 4.hadoop的jdk环境变量
+修改hadoop-env.sh、mapred-env.sh、yarn-env.sh的jdk配置，不用它默认的。  
+![hadoop的jdk环境变量](/images/article/hadoop/伪分布式/9hadoop的jdk环境变量.jpg "hadoop的jdk环境变量")
+#### 5.配置主节点
+在core-site.xml配置主节点。  
+![配置主节点](/images/article/hadoop/伪分布式/11伪分布式配置主节点.jpg "配置主节点")
+#### 6.配置副本数
+在hdfs-site.xml中配置副本数，因为是伪分布式安装，所以副本只有一个。  
+![配置副本数](/images/article/hadoop/伪分布式/12配置副本数.jpg "配置副本数")
+#### 7.配置从节点
+在slaves文件中配置从节点，因为伪分布式安装，所以从节点也是服务器自己。  
+![配置从节点](/images/article/hadoop/伪分布式/13配置从节点.jpg "配置从节点")
+#### 8.配置secondaryNameNode
+在hdfs-site.xml中配置。  
+![配置secondaryNameNode](/images/article/hadoop/伪分布式/14配置secondaryNameNode.jpg "配置secondaryNameNode")
+#### 9.配置临时目录
+在core-site.xml中配置临时目录，用来存放nameNode，dataNode和nameSecondary的文件。如nameNode中存放edit_log，fsimage等；dataNode存放上传的文件等。  
+![配置临时目录](/images/article/hadoop/伪分布式/15配置secondaryNameNode.jpg "配置临时目录")
+#### 10.格式化生成fsimage
+![格式化生成fsimage](/images/article/hadoop/伪分布式/16格式化生成fsimage.jpg "格式化生成fsimage")  
+格式化成功后会在临时目录下生成dfs目录和其子目录name的子目录中生成fsimage文件。  
+![格式化生成fsimage](/images/article/hadoop/伪分布式/17格式化成功标识.jpg "格式化生成fsimage")
+#### 11.启动集群
+会先后启动nameNode、dataNode、secondaryNameNode。  
+![启动集群](/images/article/hadoop/伪分布式/18启动集群.jpg "启动集群")
+#### 12.可视化界面
+登录地址：http://192.168.146.132:50070（登录不上，关闭Linux的防火墙试试）。  
+![可视化界面](/images/article/hadoop/伪分布式/19可视化界面.jpg "可视化界面")
+#### 13.文件上传hadoop
+创建文件上传的路径。  
+![文件上传的路径](/images/article/hadoop/伪分布式/20创建文件上传的路径.jpg "文件上传的路径")  
+上传文件：hdfs dfs -put
+![上传文件](/images/article/hadoop/伪分布式/21上传文件.jpg "上传文件")  
+上传过程中,可视化界面的显示如下：  
+![上传过程中](/images/article/hadoop/伪分布式/22上传过程中.jpg "上传过程中")  
+上传完成可以看到，可视化界面中有两个block，因为系统默认一个block的大小是128M，而我上传的文件是170M，所以分成了两块。  
+![上传完成](/images/article/hadoop/伪分布式/23上传完成.jpg "上传完成")
