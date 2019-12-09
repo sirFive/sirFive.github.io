@@ -164,11 +164,11 @@ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
 ```
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://node06:9000</value>
+        <value>hdfs://ip(或者别名):9000</value>
     </property>
     <property>
         <name>hadoop.tmp.dir</name>
-        <value>/var/sxt/hadoop/local</value>
+        <value>/var/myfile/hadoop/local</value>
     </property>
 ```
 #### 3.hdfs-site.xml
@@ -179,6 +179,6 @@ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
     </property>
     <property>
         <name>dfs.namenode.secondary.http-address</name>
-        <value>node06:50090</value>
+        <value>ip(或者别名):50090</value>
     </property>
 ```
