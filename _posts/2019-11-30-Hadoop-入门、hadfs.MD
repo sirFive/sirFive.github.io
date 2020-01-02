@@ -182,3 +182,52 @@ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
         <value>node06:50090</value>
     </property>
 ```
+### 10.hadoop全分布式的安装
+#### 1.安装前的准备
+1.同步所有服务器的时间  
+![同步所有服务器时间](/images/article/hadoop/全分布式/1同步所有服务器时间.PNG "同步所有服务器时间")  
+2.所有节点安装jdk  
+![所有节点安装jdk](/images/article/hadoop/全分布式/2.所有节点安装jdk.PNG "所有节点安装jdk")  
+3.关闭所有服务器防火墙 
+![关闭所有服务器防火墙](/images/article/hadoop/全分布式/3.关闭所有服务器防火墙.PNG "关闭所有服务器防火墙")  
+4确认home目录下有没有没有.ssh文件，没有要登录  
+![home下没有.ssh要登录](/images/article/hadoop/全分布式/4.home下没有.ssh要登录.PNG "home下没有.ssh要登录")
+#### 2.主节点免秘钥登录配置
+1.主节点配置免秘钥  
+![主节点配置免秘钥](/images/article/hadoop/全分布式/5.主节点配置免秘钥.PNG "主节点配置免秘钥")  
+2.分发主节点公钥给从节点  
+![分发主节点公钥给从节点](/images/article/hadoop/全分布式/6.分发主节点公钥给从节点.PNG "分发主节点公钥给从节点")  
+3.从节点追加主节点公钥到认证文件
+![从节点追加主节点公钥到认证文件](/images/article/hadoop/全分布式/7.从节点追加主节点公钥到认证文件.PNG "从节点追加主节点公钥到认证文件")
+#### 3.环境配置
+1.修改hadoop的jdk环境变量
+![修改hadoop的jdk环境变量](/images/article/hadoop/全分布式/8.修改hadoop的jdk环境变量.PNG "修改hadoop的jdk环境变量")  
+2.配置主节点和临时文件  
+![配置主节点和临时文件](/images/article/hadoop/全分布式/9配置主节点和临时文件.PNG "配置主节点和临时文件")  
+3.配置副本数和secNode  
+![配置副本数和secNode](/images/article/hadoop/全分布式/10配置副本数和secNode.PNG "配置副本数和secNode")  
+4.指定从节点  
+![指定从节点](/images/article/hadoop/全分布式/11指定从节点.PNG "指定从节点")
+#### 4.其它节点配置
+1.将配置好的hadoop包分发到其它节点  
+![将配置好的hadoop包分发到其它节点](/images/article/hadoop/全分布式/12将配置好的hadoop包分发到其它节点.PNG "将配置好的hadoop包分发到其它节点")  
+2.配置所有的hadoop环境变量  
+![配置所有的hadoop环境变量](/images/article/hadoop/全分布式/13配置所有的hadoop环境变量.PNG "配置所有的hadoop环境变量")
+#### 5.启动
+1.格式化主节点  
+![格式化主节点](/images/article/hadoop/全分布式/14格式化主节点.PNG "格式化主节点")  
+2.启动主节点的hadoop  
+![启动主节点的hadoop](/images/article/hadoop/全分布式/15启动主节点的hadoop.PNG "启动主节点的hadoop")
+#### 6.启动失败，重配
+1.配置别名
+![配置别名](/images/article/hadoop/全分布式/15配置别名.PNG "配置别名")  
+![配置别名](/images/article/hadoop/全分布式/16配置别名.PNG "配置别名")  
+![配置别名](/images/article/hadoop/全分布式/17配置别名.PNG "配置别名")  
+2.重新分发公钥
+![重新分发公钥](/images/article/hadoop/全分布式/18重新分发公钥.PNG "重新分发公钥")  
+3.重新格式化，要删除所有节点的临时文件再格式化，否则versionID不一样  
+![删除所有节点的临时文件](/images/article/hadoop/全分布式/19删除所有节点的临时文件.PNG "删除所有节点的临时文件")  
+4.设置根目录  
+![设置根目录](/images/article/hadoop/全分布式/20设置根目录.PNG "设置根目录")  
+5.启动成功
+![启动成功](/images/article/hadoop/全分布式/21启动成功.PNG "启动成功")
