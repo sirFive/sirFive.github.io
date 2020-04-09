@@ -7,16 +7,16 @@ tag: 复习
 ---
 ### 1.java的九种基本数据类型和它们的封装类
 ```
-基本类型	大小(字节)	默认值	封装类
-byte	1	(byte)0	Byte
-short	2	(short)0	Short
-int	4	0	Integer
-long	8	0L	Long
-float	4	0.0f	Float
-double	8	0.0d	Double
-boolean	-	false	Boolean
-char	2	\u0000(null)	Character
-void	-	-	Void
+基本类型  大小(字节)  默认值  封装类
+byte	    1	    (byte)0	   Byte
+short	    2	    (short)0   Short
+int	        4	    0	       Integer
+long	    8	    0L	       Long
+float	    4	    0.0f	   Float
+double	    8	    0.0d	   Double
+boolean	    -	    false	   Boolean
+char	    2	    \u0000(null) Character
+void	    -	    -	       Void
 ```
 ### 2.equals和==的区别
 ```
@@ -43,19 +43,19 @@ hashcode()方法和euqals()方法一样都是比较两个对象是否相等。�
 此时再对比他们的equal()，如果equal()也相同，则表示这两个对象是真的相同了，
 这样既能大大提高了效率也保证了对比的绝对正确性。
 ```
-### 4.string,stringbuffer,stringbuilder的区别
+### 4.string,stringBuffer,stringBuilder的区别
 ```
 String: 字符串常量(final修饰，不可被继承)
 StringBuffer:字符串变量（线程安全）
 StringBuilder:字符串变量（非线程安全）
 简单来说String和StringBuffer的主要区别在于string是不可变的对象，
-	因此每次对string进行操作都会新建一个新的对象如string s1=”aa”,string s2=”bb” String s3=a+b。
+	因此每次对string进行操作都会新建一个新的对象如String s1=”aa”,String s2=”bb” String s3=a+b。
 	这里就新建了3个变量（注意String s4=”aa”+”bb”+”cc”只是一个变量，因为他会默认识别成String s4=”aabbcc”）。
 	但是StringBuffer和StringBuilder每次都是只对一个对象进行操作。
 StringBuilder sb = new StringBuilder(“This is only a”).append(“ simple”).append(“ test”);
 因此在字符串常量经常改变的情况下推荐用stringBuffer或stringBuilder(非线程安全首选)
 ```
-### 5.hashMap和hashTble的区别
+### 5.hashMap和hashTable的区别
 ```
 Public class hashTable extends dictonary implments map,cloneable,serializable{}
 Public class hashMap extends AbstractMap implments map,cloneable,serializable{}
@@ -94,15 +94,15 @@ Map包括：hashMap,hashTable,sortedMap,treeMap.
 ```
 ### 8.Object公用的方法
 ```
-1.	getclass()  final方法，获得运行时类型
-2.	toString()方法，返回该对象字符串
-3.	equals()方法，比较
-4.	clone()方法，创建并返回该对象的一个副本
-5.	finalize()方法，用于垃圾回收时调用
-6.	hashCode()方法，用于hash查找
-7.	wait()方法，使当前线程等待该对象的锁（会一直等待直到获得锁或者被中断）
-8.	notify()方法，该方法唤醒在该对象上等待的某个线程
-9.	notifyAll()方法，该方法唤醒该对象上等待的所有线程
+1.getclass()  final方法，获得运行时类型
+2.toString()方法，返回该对象字符串
+3.equals()方法，比较
+4.clone()方法，创建并返回该对象的一个副本
+5.finalize()方法，用于垃圾回收时调用
+6.hashCode()方法，用于hash查找
+7.wait()方法，使当前线程等待该对象的锁（会一直等待直到获得锁或者被中断）
+8.notify()方法，该方法唤醒在该对象上等待的某个线程
+9.notifyAll()方法，该方法唤醒该对象上等待的所有线程
 ```
 ### 9.List
 #### 1.数组和 List 之间的转换
@@ -112,7 +112,8 @@ List转换成为数组：调用ArrayList的toArray方法。
 ```
 #### 2.ArrayList 和 Vector 的区别
 ```
-Vector是同步的，而ArrayList不是。然而，如果你寻求在迭代的时候对列表进行改变，你应该使用CopyOnWriteArrayList。
+Vector是同步的，而ArrayList不是。然而，如果你寻求在迭代的
+    时候对列表进行改变，你应该使用CopyOnWriteArrayList。
 ArrayList比Vector快，它是异步，不会过载。
 ```
 #### 3.Array 和 ArrayList 的区别
@@ -122,9 +123,7 @@ Array是指定大小的，而ArrayList大小可以不是固定的。
 ArrayList的默认扩容大小是10。
 ```
 ### 10.hashMap的底层实现
-```
-参考链接：http://blog.csdn.net/tuke_tuke/article/details/51588156
-```
+[参考文章](http://blog.csdn.net/tuke_tuke/article/details/51588156)
 #### 1.实现原理
 ```
 首先有一个每个元素都是链表（可能表述不准确）的数组，当添加一个元素（key-value）时，就首先计算元素key的hash值，
@@ -132,8 +131,12 @@ ArrayList的默认扩容大小是10。
 他们在数组的同一位置，但是形成了链表，同一各链表上的Hash值是相同的，所以说数组存放的是链表。而当链表长度太长时，链表就转换为红黑树，
 这样大大提高了查找的效率。当链表数组的容量超过初始容量的0.75时，再散列将链表数组扩大2倍，把原链表数组的搬移到新的数组中。
 ```
-#### 2.扩容原因
+#### 2.扩容
 ```
+构造hash表时，如果不指明初始大小，默认大小为16（即Node数组大小16），
+    如果Node[]数组中的元素达到（填充比*Node.length）重新调整HashMap大小 
+    变为原来2倍大小,扩容很耗时。
+    加载因子：0.75
 因为如果填充多，说明表空间很大，如果不扩容说明链表会越来越长，这样查询起来效率比较低。
 扩容之后将原来的链表数组的每一个链表分成奇偶两个分别挂在链表的数组的散列位置，
 这样就减少了每个链表的长度，增加查找效率。
@@ -146,7 +149,7 @@ get(key)方法时获取key的hash值，计算hash&(n-1)得到在链表数组中�
 ```
 #### 4.put(key,value)的过程
 ```
-1，判断键值对数组Node<K,V>[] tab是否为空或为null，否则以默认大小resize()；
+1，判断键值对数组Node<K,V>[] tab是否为空或为null，为空以默认大小resize()；
 2，根据键值key计算hash值得到插入的数组索引i，如果tab[i]==null，直接新建节点添加，否则转入3
 3，判断当前数组中处理hash冲突的类型为链表还是红黑树(check第一个节点类型即可),分别处理。
 当为链表时，遍历判断p.next是否为空，为空则插入，如果判断过程长度大于8转为红黑树，有相同的key也结束。
