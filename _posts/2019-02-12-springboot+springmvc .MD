@@ -38,8 +38,8 @@ SpringMVC是一个基于MVC架构、用来简化web应用程序开发的应用�
 （1）用户发送请求至前端控制器DispatcherServlet；  
 （2） DispatcherServlet收到请求后，调用HandlerMapping处理器映射器，请求获取Handle；  
 （3）处理器映射器根据请求url找到具体的处理器，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet；  
-（4）DispatcherServlet通过HandlerAdapter处理器适配器调用处理器；
-（5）执行处理器(Handler，也叫后端控制器)；  
+（4）DispatcherServlet通过HandlerAdapter处理器适配器调用处理器；  
+（5）执行处理器(Handler，也叫后端控制器)； 
 （6）Handler执行完成返回ModelAndView；  
 （7）HandlerAdapter将Handler执行结果ModelAndView返回给DispatcherServlet；  
 （8）DispatcherServlet将ModelAndView传给ViewResolver视图解析器进行解析；  
@@ -49,7 +49,7 @@ SpringMVC是一个基于MVC架构、用来简化web应用程序开发的应用�
 ![springMvc流程图](/images/article/javaWeb/springmvc-process.jpg "springMvc流程图")  
 #### 3.Spring MVC 常用的 5 个注解
 @RequestMapping :用于处理请求 url 映射的注解，表示类中的所有响应请求的方法都是以该地址作为父路径。  
-@RequestBoy :注解实现接收http请求的json数据，将json转换为java对象。  
+@RequestBody :注解实现接收http请求的json数据，将json转换为java对象。  
 @ResponseBody :注解实现将controller方法返回对象转化为json对象响应给客户。  
 @PathVariable :请求路径参数。  
 @RequestParam :方法参数。
@@ -116,9 +116,9 @@ View是一个接口， 它的实现类支持不同的视图类型（jsp，freema
 ```
 String userName = new String(request.getParamter("userName").getBytes("ISO8859-1"),"utf-8")
 ```
-#### 7.SpringMvc的控制器是不是单例模式,如果是,有什么问题,怎么解决？
+#### 13.SpringMvc的控制器是不是单例模式,如果是,有什么问题,怎么解决？
 是单例模式,所以在多线程访问的时候有线程安全问题,不要用同步,会影响性能的,解决方案是在控制器里面不能写字段。
-#### 8.在方法里面得到Request,或者Session
+#### 14.在方法里面得到Request,或者Session
 直接在方法的形参中声明request,SpringMvc就自动把request对象传入。
-#### 9.参考链接
+#### 15.参考链接
 [参考文章](https://blog.csdn.net/a745233700/article/details/80963758)
