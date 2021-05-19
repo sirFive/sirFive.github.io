@@ -118,6 +118,7 @@ ArrayList比Vector快，它是异步，不会过载。
 ```
 #### 3.Array 和 ArrayList 的区别
 ```
+ArrayList默认初始化大小为10，每次扩容加一半。`（oldCapacity+(oldCapacity>>1):10-->15-->24）`
 Array可以容纳基本类型和对象，而ArrayList只能容纳对象。
 Array是指定大小的，而ArrayList大小可以不是固定的。
 ArrayList的默认扩容大小是10。
