@@ -16,10 +16,9 @@ Spring Boot是spring开源组织下的子项目，是spring组件一站式解决
 @EnableAutoConfiguration：开启自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： `@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })`。  
 @ComponentScan：Spring组件扫描。
 #### 4.SpringBoot 自动配置原理
-SpringBoot 自动配置主要通过 @EnableAutoConfiguration, @Conditional, @EnableConfigurationProperties 或者 @ConfigurationProperties 等几个注解来进行自动配置完成的。  
-@EnableAutoConfiguration 开启自动配置，主要作用就是调用 Spring-Core 包里的 loadFactoryNames()，加载类路径及所有jar包下META-INF/spring.factories配置中映射的自动配置的类。  
-@Conditional 条件注解，通过判断类路径下有没有相应配置的 jar 包来确定是否加载和自动配置这个类。  
-@EnableConfigurationProperties 的作用就是，给自动配置提供具体的配置参数，只需要写在 application.properties 中，就可以通过映射写入配置类的 POJO 属性中。
+@EnableAutoConfiguration 开启自动配置，它使用@import(EnableAutoConfigurationImportSelector.class)注解来完成导入配置的功能，导入的类使用了SpringFactoriesLoader.loadFactoryNames方法来
+加载类路径及所有jar包下META-INF/spring.factories配置中映射的自动配置的类。
+这些自动配置类又通过@EnableConfigurationProperties 注解支持通过xxxxProperties读取application.properties/application.yml属性文件中我们配置的值。如果我们没有配置值，就使用默认值，这就是所谓约定>配置的具体落地点。
 #### 5.SpringBoot 中的 Starters
 Starters可以理解为启动器，它包含了一系列可以集成到应用里面的依赖包，你可以一站式集成Spring及其他技术，而不需要到处找示例代码和依赖包。如`spring-boot-starter-web`,
 它集成了`spring-web`,`spring-webmvc`,`spring-boot-starter-json`等模块。
