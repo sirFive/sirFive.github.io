@@ -21,8 +21,8 @@ SpringBoot 自动配置主要通过 @EnableAutoConfiguration, @Conditional, @Ena
 @Conditional 条件注解，通过判断类路径下有没有相应配置的 jar 包来确定是否加载和自动配置这个类。  
 @EnableConfigurationProperties 的作用就是，给自动配置提供具体的配置参数，只需要写在 application.properties 中，就可以通过映射写入配置类的 POJO 属性中。
 #### 5.SpringBoot 中的 Starters
-Starters可以理解为启动器，它包含了一系列可以集成到应用里面的依赖包，你可以一站式集成Spring及其他技术，而不需要到处找示例代码和依赖包。如你想使用Spring JPA访问数据库，
-只要加入spring-boot-starter-data-jpa启动器依赖就能使用了。
+Starters可以理解为启动器，它包含了一系列可以集成到应用里面的依赖包，你可以一站式集成Spring及其他技术，而不需要到处找示例代码和依赖包。如`spring-boot-starter-web`,
+它集成了`spring-web`,`spring-webmvc`,`spring-boot-starter-json`等模块。
 #### 6.如何在 SpringBoot 启动的时候运行一些特定的代码
 可以实现接口 ApplicationRunner 或者 CommandLineRunner，这两个接口实现方式一样，它们都只提供了一个 run 方法。
 #### 7.SpringBoot 配置加载顺序
