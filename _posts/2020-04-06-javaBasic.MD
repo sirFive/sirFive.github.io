@@ -7,16 +7,16 @@ tag: 复习
 ---
 ### 1.java的九种基本数据类型和它们的封装类
 ```
-基本类型  大小(字节)  默认值   封装类
-byte        1       (byte)0 Byte
-short       2       (short)0    Short
-int     4       0   Integer
-long        8       0L  Long
-float       4       0.0f    Float
-double      8       0.0d    Double
-boolean     -       false   Boolean
-char        2       \u0000(null) Character
-void        -       -   Void
+基本类型  大小(字节)  默认值          封装类
+byte        1       (byte)0       Byte
+short       2       (short)0      Short
+int         4       0             Integer
+long        8       0L            Long
+float       4       0.0f          Float
+double      8       0.0d          Double
+boolean     -       false         Boolean
+char        2       \u0000(null)  Character
+void        -       -             Void
 ```
 ### 2.equals和==的区别
 ```
