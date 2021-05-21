@@ -24,7 +24,7 @@ void        -       -             Void
 ==等于   equals相同
 专业来说：
 Java中的数据类型可以分为两类：基本数据类型和复合数据类型。
-基本数据类型：byte,short,int,long float,double,char,boolean
+基本数据类型：byte,short,,char,int,long,float,double,boolean
 它们之间的比较使用==，比较的是它们的值是否相等。
 复合数据类型：当它们用==进行比较的时候比较的是它们在内存中存放的地址。所以除非new出来的是同一个对象，
 	否则结果都为false。Java中所有的类都继承于Object类，该类中有方法equals，这个方法最开始比较的也是对象的内存地址，
