@@ -60,7 +60,7 @@ StringBuilder sb = new StringBuilder(“This is only a”).append(“ simple”)
 Public class hashTable extends dictonary implments map,cloneable,serializable{}
 Public class hashMap extends AbstractMap implments map,cloneable,serializable{}
 hashMap非线程安全，hashTable线程安全。
-HashMap 的key和value允许NULL,hashTable不允许
+HashMap的key和value允许NULL,hashTable的key和value允不允许NULL
 hashTable的contains方法在hashMap中替换成了containsValue和containsKey
 
 ```
